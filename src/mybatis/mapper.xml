@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="abc">
+
+<select id="tip_select" resultType="Dto"> <!-- 형태를 남긴다  List를써서 여러줄 받을수있음-->
+select * from tip;
+</select>
+
+<select id="tip_contentsview" resultType="Dto"> <!-- 형태를 남긴다  List를써서 여러줄 받을수있음-->
+select * from tip where number=#{number};
+</select>
+
+<insert id="tip_insert" parameterType="dto"><!-- dto 객체등록 --> 
+insert into tip values(default,#{category},#{title},#{writer},now(),'0',#{contents});
+</insert>
+
+<update id="tip_update" parameterType="dto"><!-- dto 객체등록 -->
+update tip set title=#{title}, contents=#{contents} where number=#{number};
+</update>
+
+<update id="hits_number" parameterType="hashmap">
+update tip set hits = IFNULL(hits, 0) + 1 where
+number = ${number};
+</update>
+
+<delete id="tip_delete" parameterType="dto">
+delete from tip where number=#{number};
+</delete>
+
+
+<select id="com_select" resultType="Dto"> <!-- 형태를 남긴다  List를써서 여러줄 받을수있음-->
+select * from comments;
+</select>
+
+<insert id="com_insert" parameterType="dto"><!-- dto 객체등록 --> 
+insert into comments values(#{c_number},#{b_number},#{comment_box},#{writer},now());
+</insert>
+
+<update id="com_update" parameterType="dto"><!-- dto 객체등록 -->
+update comments set comment_box=#{comment_box} where c_number=#{c_number};
+</update>
+
+<delete id="com_delete" parameterType="dto">
+delete from comments where c_number=#{c_number};
+</delete>
+</mapper>
